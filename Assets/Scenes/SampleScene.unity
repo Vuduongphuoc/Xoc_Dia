@@ -381,14 +381,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &357631164 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4396582588375468453, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
-  m_PrefabInstance: {fileID: 4396582588556807449}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &357631165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4396582588375468452, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
+  m_PrefabInstance: {fileID: 4396582588556807449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &357631166 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4396582588375468455, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
   m_PrefabInstance: {fileID: 4396582588556807449}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &382506178
@@ -481,14 +481,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &413855575 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4396582588375468453, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
-  m_PrefabInstance: {fileID: 30161707}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &413855576 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4396582588375468452, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
+  m_PrefabInstance: {fileID: 30161707}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &413855577 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4396582588375468455, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
   m_PrefabInstance: {fileID: 30161707}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &465622764
@@ -578,31 +578,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 465622770}
         m_TargetAssemblyTypeName: RandomDice, Assembly-CSharp
-        m_MethodName: ChangeColor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 465622770}
-        m_TargetAssemblyTypeName: RandomDice, Assembly-CSharp
-        m_MethodName: ChangeBGEvenOrOdd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 465622770}
-        m_TargetAssemblyTypeName: RandomDice, Assembly-CSharp
-        m_MethodName: CheckColor
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -663,21 +639,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dices:
-  - {fileID: 357631164}
-  - {fileID: 1662502136}
-  - {fileID: 2019527178}
-  - {fileID: 413855575}
+  - {fileID: 357631166}
+  - {fileID: 1662502138}
+  - {fileID: 2019527180}
+  - {fileID: 413855577}
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
-  evenButtons:
-  - {fileID: 304496936}
-  - {fileID: 1428614428}
-  - {fileID: 1076330483}
   oddButtons:
-  - {fileID: 1770349324}
-  - {fileID: 666765229}
-  - {fileID: 721613759}
+  - {fileID: 1770349326}
+  - {fileID: 666765231}
+  - {fileID: 721613761}
+  evenButtons:
+  - {fileID: 304496938}
+  - {fileID: 1428614430}
+  - {fileID: 1076330485}
 --- !u!1 &473790667
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,14 +1619,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1662502136 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4396582588375468453, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
-  m_PrefabInstance: {fileID: 1289712657}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1662502137 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4396582588375468452, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
+  m_PrefabInstance: {fileID: 1289712657}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1662502138 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4396582588375468455, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
   m_PrefabInstance: {fileID: 1289712657}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1770349324
@@ -1737,14 +1713,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2019527178 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4396582588375468453, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
-  m_PrefabInstance: {fileID: 494979691}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2019527179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4396582588375468452, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
+  m_PrefabInstance: {fileID: 494979691}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2019527180 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4396582588375468455, guid: e55e0f05c07258b43a1047dccefb79f8, type: 3}
   m_PrefabInstance: {fileID: 494979691}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4396582588556807449
