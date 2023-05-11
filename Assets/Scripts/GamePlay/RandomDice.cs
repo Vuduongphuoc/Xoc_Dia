@@ -1,4 +1,4 @@
-    using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -8,81 +8,139 @@ using UnityEngine.UI;
 public class RandomDice : MonoBehaviour
 {
 
-    public GameObject[] dices;
+    public List<SpriteRenderer> dices;
 
     [SerializeField] private Color[] colors;
 
-    public GameObject[] evenButtons;
-    public GameObject[] oddButtons;
-    int w_count;
-    int r_count;
+    // vcl, 3 cái kia còn éo phải cái nút.
+    public List<SpriteRenderer> oddButtons;
+    public List<SpriteRenderer> evenButtons;
+
+    public BetSystem betsystem;
+    public Text moneyDisplay;
+
+    float countdownTime;
+    public GameObject countdownDisplay;
+
     // Start is called before the first frame update
     void Start()
     {
-        CheckColor();
-        dices = GameObject.FindGameObjectsWithTag("Dice");
+        countdownDisplay.SetActive(false);
+        //CheckColor();
+        //dices = GameObject.FindGameObjectsWithTag("Dice");
     }
 
-    // Update is called once per frame
-    void Update()
+    // Cái này là data đã random nhá
+
+    List<int> data = new List<int>();
+
+
+    // Event chỉ call vào 1 method thôi, từ cái này call sang các method nhỏ khác
+    public void OnClick()
+    {
+        StartCoroutine(TimeCountDown());
+    }
+
+    // Method này bao gồm việc random data và set color cho dice
+    // Cho thêm màu xanh đỏ tím vàng vào nó cũng ăn nhé
+
+    void GenerateData()
+    {
+        data.Clear();
+        dices.ForEach(x =>
+        {
+            var randomColor = Random.Range(0, colors.Length);
+            data.Add(randomColor);
+            x.color = colors[randomColor];
+        });
+    }
+
+    // Show kết quả
+
+    void ChangeBGEvenOrOdd()
     {
         
-    }
-    public void ChangeColor()
-    {
-        dices[0].GetComponent<Renderer>().material.color = colors[Random.Range(0, 2)];
-        dices[1].GetComponent<Renderer>().material.color = colors[Random.Range(0, 2)];
-        dices[2].GetComponent<Renderer>().material.color = colors[Random.Range(0, 2)];
-        dices[3].GetComponent<Renderer>().material.color = colors[Random.Range(0, 2)];
-
-    }
-    
-    public void CheckColor()
-    {
-        foreach (GameObject a in dices)
+        //Lẻ
+        if (data.Count(x => x == 0) % 2 != 0)
         {
-            if (a.GetComponent<Renderer>().material.color == colors[0])
+            oddButtons[0].color = Color.green;
+            oddButtons[1].color = Color.green;
+            oddButtons[2].color = Color.green;
+            CoinsSystem.moneyValue += BetSystem.lebetValue;
+            if (data.Count(x => x == 0) == 3)
             {
-                w_count++;
-                Debug.Log(w_count);
-                return;
+                CoinsSystem.moneyValue += (BetSystem.whiteRedValue * 3);
             }
+            else
+            {
+                oddButtons[1].color = Color.black;
+            }
+            if(data.Count(x => x == 1) == 3)
+            {
+                CoinsSystem.moneyValue += (BetSystem.redWhiteValue * 3);
+            }
+            else
+            {
+                oddButtons[2].color = Color.black;
+            }
+            moneyDisplay.text = " $ " + CoinsSystem.moneyValue;
         }
+
+        // Chẵn
+        if (data.Count(x => x == 0) % 2 == 0)
+        {
+            evenButtons[0].color = Color.green;
+            CoinsSystem.moneyValue += BetSystem.chanbetValue;
+            if (data.Count(x => x == 0) == 4)
+            {
+                evenButtons[1].color = Color.green;
+                CoinsSystem.moneyValue += (BetSystem.allWhiteValue * 12);
+            }
+            else
+            {
+                evenButtons[1].color = Color.black;
+            }
+
+            if (data.Count(x => x == 1) == 4)
+            {
+                evenButtons[2].color = Color.green;
+                CoinsSystem.moneyValue += (BetSystem.allRedValue * 12);
+            }
+            else
+            {
+                evenButtons[2].color = Color.black;
+            }
+            moneyDisplay.text = " $ " + CoinsSystem.moneyValue;
+        }
+        betsystem.BetResult();
+        //
     }
 
-    public void ChangeBGEvenOrOdd()
+
+    // Getter này trả về true nếu chẵn
+
+   IEnumerator ResetAllState()
+   {
+        GenerateData();
+        Debug.Log("Số dice có màu trắng là : " + data.Count(x => x == 0));
+        Debug.Log("Số dice có màu đỏ là : " + data.Count(x => x == 1));
+        ChangeBGEvenOrOdd();
+        yield return new WaitForSeconds(3f);
+        evenButtons.ForEach(x => x.color = Color.black);
+        oddButtons.ForEach(x => x.color = Color.black);
+   }
+    IEnumerator TimeCountDown()
     {
-        if (w_count % 2 == 0 && r_count % 2 == 0)
+        countdownTime = 10f;
+        countdownDisplay.SetActive(true);
+        while (countdownTime >= 0)
         {
-            oddButtons[0].GetComponent<Renderer>().material.color = Color.blue;
-            oddButtons[1].GetComponent<Renderer>().material.color = Color.blue;
-            oddButtons[2].GetComponent<Renderer>().material.color = Color.blue;
-
-            evenButtons[0].GetComponent<Renderer>().material.color = Color.green;
-            evenButtons[1].GetComponent<Renderer>().material.color = Color.green;
-            evenButtons[2].GetComponent<Renderer>().material.color = Color.green;
+            countdownDisplay.GetComponent<Text>().text = countdownTime.ToString();
+            yield return new WaitForSeconds(1f);
+            countdownTime--;
         }
-        else if (w_count % 2 != 0 && r_count % 2 !=0  )
-        {
-            oddButtons[0].GetComponent<Renderer>().material.color = Color.green;
-            oddButtons[1].GetComponent<Renderer>().material.color = Color.green;
-            oddButtons[2].GetComponent<Renderer>().material.color = Color.green;
-
-            evenButtons[0].GetComponent<Renderer>().material.color = Color.blue;
-            evenButtons[1].GetComponent<Renderer>().material.color = Color.blue;
-            evenButtons[2].GetComponent<Renderer>().material.color = Color.blue;
-        }
+        countdownDisplay.SetActive(false);
+        StartCoroutine(ResetAllState());
     }
-}                //else if (w_count == 1 && w_count == 3)
-                //{
-                //    oddButtons[0].GetComponent<Renderer>().material.color = Color.green;
-                //    oddButtons[1].GetComponent<Renderer>().material.color = Color.green;
-                //    oddButtons[2].GetComponent<Renderer>().material.color = Color.green;
-
-                //    evenButtons[0].GetComponent<Renderer>().material.color = Color.blue;
-                //    evenButtons[1].GetComponent<Renderer>().material.color = Color.blue;
-                //    evenButtons[2].GetComponent<Renderer>().material.color = Color.blue;
-                //    Debug.Log(w_count + "White");
-                //    return;
-                //}
+}             
  
