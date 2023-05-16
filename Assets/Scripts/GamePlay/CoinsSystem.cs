@@ -8,47 +8,49 @@ public class CoinsSystem : MonoBehaviour
 {
     public Text moneyDisplay;
     public static int moneyValue;
+    public static int moneyPlayerget;
+    public static int realmoneyPlayerGet;
     public static int betCoinsValue;
     public static int coinsId;
     public bool isSelected;
     // Start is called before the first frame update
     void Start()
     {
-        coinsId = 0;
         moneyValue = 3000;
-        moneyDisplay.text = " $ " + moneyValue;  
+
+        moneyDisplay.text = " $ " + moneyValue;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void ChoseCoinsValue(int id)
     {
         isSelected = !isSelected;
         
-            if (id == 1)
+            if (id == 0)
             {
                 betCoinsValue = 10;
                 coinsId = id;
             }
-            else if (id == 2)
+            else if (id == 1)
             {
                 betCoinsValue = 20;
                 coinsId = id;
             }
-            else if (id == 3)
+            else if (id == 2)
             {
                 betCoinsValue = 30;
                 coinsId = id;
             }
-            else if (id == 4)
+            else if (id == 3)
             {
                 betCoinsValue = 50;
                 coinsId = id;
             }
-            else if (id == 5)
+            else if (id == 4)
             {
                 betCoinsValue = 100;
                 coinsId = id;
