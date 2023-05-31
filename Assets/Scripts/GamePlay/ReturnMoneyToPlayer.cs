@@ -8,6 +8,9 @@ public class ReturnMoneyToPlayer : MonoBehaviour
     private float speed;
     public GameObject host;
     public GameObject player;
+
+    public RandomDice betButtons;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,19 +24,21 @@ public class ReturnMoneyToPlayer : MonoBehaviour
     }
     void MoveToPlayer()
     {
-        if (CoinsSystem.realmoneyPlayerGet >= 0)
+        if (betButtons)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         }
-        else if (CoinsSystem.realmoneyPlayerGet < 0)
+        else if(!betButtons)
         {
-            transform.position = Vector3.MoveTowards(transform.position, host.transform.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, host.transform.position, speed * Time.deltaTime); 
         }
+        
         StartCoroutine(DestroyOnEnter());
+        return;
     }
     IEnumerator DestroyOnEnter()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 }

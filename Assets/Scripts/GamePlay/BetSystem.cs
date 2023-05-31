@@ -1,11 +1,13 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using UnityEditor.UIElements;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BetSystem : MonoBehaviour
 {
+    
+    public static BetSystem Instance;
     //Bets text
     public Text moneyDisplay;
     public Text chanBetDisplay;
@@ -16,7 +18,8 @@ public class BetSystem : MonoBehaviour
     public Text allRedDisplay;
 
     //Coins value
-    public GameObject[] coinsparent;
+    public GameObject coinsparent;
+    public Transform coinPosition;
 
     //Bets value
     public static int chanbetValue;
@@ -31,6 +34,15 @@ public class BetSystem : MonoBehaviour
 
     private CoinsSystem[] coins;
     // Start is called before the first frame update
+
+    public List<GameObject> listCoin = new List<GameObject>();
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
     void Start()
     {
         coins = FindObjectsOfType<CoinsSystem>();
@@ -40,6 +52,18 @@ public class BetSystem : MonoBehaviour
     void Update()
     {
         
+    }
+    void CreateObject()
+    {
+        GameObject newcoin = ObjectPooling.instance.GetPooledObject();
+        //Instantiate(coinsparent, coinsparent.transform.position, Quaternion.identity);
+        if(newcoin != null)
+        {
+            newcoin.transform.position = coinPosition.position;
+            newcoin.SetActive(true);
+        }
+        newcoin.GetComponent<BetCoin>().enabled = true;
+        listCoin.Add(newcoin);
     }
     public void Bet(int id)
     {
@@ -55,30 +79,21 @@ public class BetSystem : MonoBehaviour
                 {
                     chanbetValue += CoinsSystem.betCoinsValue;
                     chanBetDisplay.text = " $ " + chanbetValue;
-                    GameObject newcoin = 
-                        Instantiate(coinsparent[CoinsSystem.coinsId], coinsparent[CoinsSystem.coinsId].transform.position, Quaternion.identity);
-                    newcoin.GetComponent<BetCoin>().enabled = true;
-                    
+                    CreateObject();
                     btnid = id;
                 }
                 if (id == 1)
                 {
                     lebetValue += CoinsSystem.betCoinsValue;
                     leBetDisplay.text = " $ " + lebetValue;
-                    GameObject newcoin = 
-                        Instantiate(coinsparent[CoinsSystem.coinsId], coinsparent[CoinsSystem.coinsId].transform.position, Quaternion.identity);
-                    newcoin.GetComponent<BetCoin>().enabled = true;
-                    
+                    CreateObject();
                     btnid = id;
                 }
                 if (id == 2)
                 {
                     whiteRedValue += CoinsSystem.betCoinsValue;
                     whiteRedDisplay.text = " $ " + whiteRedValue;
-                    GameObject newcoin = 
-                        Instantiate(coinsparent[CoinsSystem.coinsId], coinsparent[CoinsSystem.coinsId].transform.position, Quaternion.identity);
-                    newcoin.GetComponent<BetCoin>().enabled = true;
-                    
+                    CreateObject();
 
                     btnid = id;
                 }
@@ -86,32 +101,21 @@ public class BetSystem : MonoBehaviour
                 {
                     redWhiteValue += CoinsSystem.betCoinsValue;
                     redWhiteDisplay.text = " $ " + redWhiteValue;
-                    GameObject newcoin = 
-                        Instantiate(coinsparent[CoinsSystem.coinsId], coinsparent[CoinsSystem.coinsId].transform.position, Quaternion.identity);
-                    newcoin.GetComponent<BetCoin>().enabled = true;
-                    
-
+                    CreateObject() ;
                     btnid = id;
                 }
                 if(id == 4)
                 {
                     allWhiteValue += CoinsSystem.betCoinsValue;
                     allWhiteDisplay.text = " $ " + allWhiteValue;
-                    GameObject newcoin = 
-                        Instantiate(coinsparent[CoinsSystem.coinsId], coinsparent[CoinsSystem.coinsId].transform.position, Quaternion.identity);
-                    newcoin.GetComponent<BetCoin>().enabled = true;
-                    
-
+                    CreateObject();
                     btnid = id;
                 }
                 if (id == 5)
                 {
                     allRedValue += CoinsSystem.betCoinsValue;
                     allRedDisplay.text = " $ " + allRedValue;
-                    GameObject newcoin = 
-                        Instantiate(coinsparent[CoinsSystem.coinsId], coinsparent[CoinsSystem.coinsId].transform.position, Quaternion.identity);
-                    newcoin.GetComponent<BetCoin>().enabled = true;
-                    
+                    CreateObject();
                     btnid = id;
                 }
             }

@@ -1,43 +1,68 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BetCoin : MonoBehaviour
 {
-    
     [SerializeField] Transform[] BetPlace;
-    
     private float speed;
 
+
+    public ButtonDoSomething btn;
+    public ButtonDontSomething btned;
+
+    
+    public GameObject player;
+    public GameObject host;
     Transform nextpos;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         speed = 40f;
+    }
+    void Start()
+    { 
         nextpos = BetPlace[BetSystem.btnid];
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, nextpos.position, speed * Time.deltaTime);
+        if(!RandomDice.Instance.inCountDown)
+        {
+            btn = GetComponentInParent<ButtonDoSomething>();
+            btned = GetComponentInParent<ButtonDontSomething>();
+            StartCoroutine(DelayResult());
+            if (btn.isWin)
+            {
+               transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+                
+            }
+            else if(btned.isLose)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, host.transform.position, speed * Time.deltaTime);
+                
+            }
+            StartCoroutine(Disable());
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, nextpos.position, speed * Time.deltaTime);
+            setParent();
 
-        StartCoroutine(RoundEnd());
+        }
     }
-    public void SetParent()
+    public void setParent()
     {
-        gameObject.transform.SetParent(BetPlace[BetSystem.btnid]);
+        transform.SetParent(nextpos);
     }
-    IEnumerator RoundEnd()
+    IEnumerator Disable()
     {
-        yield return new WaitForSeconds(10.5f);
-        gameObject.GetComponent<CenterState>().enabled = true;
-        SetParent();
-        yield return new WaitForSeconds(0.5f);
-        gameObject.GetComponent<BetCoin>().enabled = false;
-
+        yield return new WaitForSeconds(1f);
+        gameObject.SetActive(false);
     }
-
-
+    IEnumerator DelayResult()
+    {
+        yield return new WaitForSeconds(5f);
+    }
+    
 }

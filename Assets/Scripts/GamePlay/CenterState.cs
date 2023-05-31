@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class CenterState : MonoBehaviour
 {
-    public RandomDice random;
     public GameObject center;
-    private float speed;
     // Start is called before the first frame update
     void Start()
     {
-        speed = 30f;
+
     }
 
     // Update is called once per frame
@@ -20,11 +18,10 @@ public class CenterState : MonoBehaviour
     }
     IEnumerator ResultState()
     {
-        transform.position = Vector3.MoveTowards(transform.position, center.transform.position, speed * Time.deltaTime);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         gameObject.GetComponent<ReturnMoneyToPlayer>().enabled = true;
    
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         gameObject.GetComponent<CenterState>().enabled = false;
     }
 }
