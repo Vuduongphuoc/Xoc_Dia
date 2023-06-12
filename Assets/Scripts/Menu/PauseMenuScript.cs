@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class PauseMenuScript : MonoBehaviour
 {
+    public GameObject dish;
     public PauseBtn pause;
+    public GameObject overLay;
     public GameObject pauseMenu;
     public GameObject pauseBtn;
     public GameObject menuScene;
@@ -11,31 +13,25 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject gamePlay;
     public GameObject gameManager;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void toMenu()
     {
         DestroyObjects();
+        overLay.SetActive(false);
         CoinsSystem.Instance.menuMoneyDisplay.text = " $ " + CoinsSystem.moneyValue;
         menuScene.SetActive(true);
         gamePlayUI.SetActive(false);
         gamePlay.SetActive(false);  
         gameManager.SetActive(false);
         pauseMenu.SetActive(false);
+        CoinsSystem.Instance.isSelected = false;
     }
     public void toContinue()
     {
         if (pause.isPause)
         {
+            PauseBtn.instance.gameObjectEnable();
+            dish.SetActive(true);
+            overLay.SetActive(false);
             pauseBtn.SetActive(true);
             pauseMenu.SetActive(false);
             Time.timeScale = 1.0f;

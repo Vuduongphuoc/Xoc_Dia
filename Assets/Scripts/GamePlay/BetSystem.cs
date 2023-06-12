@@ -1,12 +1,11 @@
 
 using System.Collections.Generic;
-
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BetSystem : MonoBehaviour
 {
-    
     public static BetSystem Instance;
     //Bets text
     public Text moneyDisplay;
@@ -17,9 +16,11 @@ public class BetSystem : MonoBehaviour
     public Text allWhiteDisplay;
     public Text allRedDisplay;
 
-    //Coins value
+    //Coins
     public GameObject coinsparent;
     public Transform coinPosition;
+    public Sprite[] clonecoinSprite;
+    public int coinSpriteID;
 
     //Bets value
     public static int chanbetValue;
@@ -33,9 +34,9 @@ public class BetSystem : MonoBehaviour
     public static int btnid;
 
     private CoinsSystem[] coins;
-    // Start is called before the first frame update
 
     public List<GameObject> listCoin = new List<GameObject>();
+
     private void Awake()
     {
         if(Instance == null)
@@ -47,18 +48,15 @@ public class BetSystem : MonoBehaviour
     {
         coins = FindObjectsOfType<CoinsSystem>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     void CreateObject()
     {
         GameObject newcoin = ObjectPooling.instance.GetPooledObject();
+        
         //Instantiate(coinsparent, coinsparent.transform.position, Quaternion.identity);
         if(newcoin != null)
         {
+            newcoin.GetComponent<SpriteRenderer>().sprite = clonecoinSprite[coinSpriteID];
             newcoin.transform.position = coinPosition.position;
             newcoin.SetActive(true);
         }
@@ -66,8 +64,7 @@ public class BetSystem : MonoBehaviour
         listCoin.Add(newcoin);
     }
     public void Bet(int id)
-    {
-
+    {   
         //Get value from Bet buttons
         foreach(CoinsSystem c in coins)
         {
@@ -129,6 +126,7 @@ public class BetSystem : MonoBehaviour
         redWhiteValue = 0;
         allRedValue = 0;
         allWhiteValue = 0;
+        CoinsSystem.moneyPlayerget = 0;
 
         chanBetDisplay.text = " $ 0 ";
         leBetDisplay.text = " $ 0 ";
@@ -137,4 +135,5 @@ public class BetSystem : MonoBehaviour
         allWhiteDisplay.text = " $ 0";
         allRedDisplay.text = " $ 0 ";
     }
+
 }

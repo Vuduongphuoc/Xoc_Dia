@@ -6,18 +6,17 @@ public class BetCoin : MonoBehaviour
     [SerializeField] Transform[] BetPlace;
     private float speed;
 
-
     public ButtonDoSomething btn;
     public ButtonDontSomething btned;
 
-    
     public GameObject player;
     public GameObject host;
     Transform nextpos;
+
     // Start is called before the first frame update
     private void Awake()
     {
-        speed = 40f;
+        speed = 140f;
     }
     void Start()
     { 

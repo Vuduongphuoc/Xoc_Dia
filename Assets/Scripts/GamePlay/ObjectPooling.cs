@@ -6,11 +6,13 @@ public class ObjectPooling : MonoBehaviour
 {
     public static ObjectPooling instance;
 
-    private List<GameObject> pooledObjects = new List<GameObject>();
+    public static SpriteRenderer objSprite;
+
+    public List<GameObject> pooledObjects = new List<GameObject>();
     private int amountToPool = 40;
 
-    [SerializeField] private GameObject coinPrefabs;
-
+    public GameObject coinPrefabs;
+    //public static SpriteRenderer coinPrefabsSprite;
     private void Awake()
     {
         if(instance == null)
@@ -22,13 +24,12 @@ public class ObjectPooling : MonoBehaviour
     void Start()
     {
         for(int i = 0; i < amountToPool; i++)
-        {
+        { 
             GameObject obj = Instantiate(coinPrefabs);
             obj.SetActive(false);
-            pooledObjects.Add(obj);
+            pooledObjects.Add(obj); 
         }
     }
-
     public GameObject GetPooledObject()
     {
         for(int i =0; i < pooledObjects.Count; i++)

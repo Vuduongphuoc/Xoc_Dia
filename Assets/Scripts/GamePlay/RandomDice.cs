@@ -86,23 +86,24 @@ public class RandomDice : MonoBehaviour
         // Chẵn
         if (data.Count(x => x == 0) % 2 == 0)
         {
-            CoinsSystem.moneyPlayerget += BetSystem.chanbetValue;
+            CoinsSystem.evenMoney += BetSystem.chanbetValue;
             evenButtons[0].GetComponent<ButtonDoSomething>().enabled = true;
             if (data.Count(x => x == 0) == 4)
             {
                 
                 evenButtons[1].GetComponent<ButtonDoSomething>().enabled = true;
-                CoinsSystem.moneyPlayerget += (BetSystem.allWhiteValue * 12);
+                CoinsSystem.evenMoney += (BetSystem.allWhiteValue * 12);
             }
             if (data.Count(x => x == 1) == 4)
             {
                 
                 evenButtons[2].GetComponent<ButtonDoSomething>().enabled = true;
-                CoinsSystem.moneyPlayerget += (BetSystem.allRedValue * 12);    
+                CoinsSystem.evenMoney += (BetSystem.allRedValue * 12);    
             }           
         }
         else
         {
+            CoinsSystem.evenMoney = 0;
             evenButtons[0].GetComponent<ButtonDontSomething>().enabled = true;
             evenButtons[1].GetComponent<ButtonDontSomething>().enabled = true;
             evenButtons[2].GetComponent<ButtonDontSomething>().enabled = true;
@@ -114,23 +115,24 @@ public class RandomDice : MonoBehaviour
         //Lẻ
         if (data.Count(x => x == 0) % 2 != 0)
         {
-            CoinsSystem.moneyPlayerget += BetSystem.lebetValue;
+            CoinsSystem.oddMoney += BetSystem.lebetValue;
             oddButtons[0].GetComponent<ButtonDoSomething>().enabled = true;
             if (data.Count(x => x == 0) == 3)
             {
                 
-                CoinsSystem.moneyPlayerget += (BetSystem.whiteRedValue * 3);
+                CoinsSystem.oddMoney += (BetSystem.whiteRedValue * 3);
                 oddButtons[1].GetComponent<ButtonDoSomething>().enabled = true;
             }
             if (data.Count(x => x == 1) == 3)
             {
                 
-                CoinsSystem.moneyPlayerget += (BetSystem.redWhiteValue * 3);
+                CoinsSystem.oddMoney += (BetSystem.redWhiteValue * 3);
                 oddButtons[2].GetComponent<ButtonDoSomething>().enabled = true;
             }
         }
         else
         {
+            CoinsSystem.oddMoney = 0;
             oddButtons[0].GetComponent<ButtonDontSomething>().enabled = true;
             oddButtons[1].GetComponent<ButtonDontSomething>().enabled = true;
             oddButtons[2].GetComponent<ButtonDontSomething>().enabled = true;
@@ -140,13 +142,14 @@ public class RandomDice : MonoBehaviour
     void CountMoney()
     {
         betsystem.ResetResult();
+        CoinsSystem.moneyPlayerget = CoinsSystem.oddMoney + CoinsSystem.evenMoney;
         CoinsSystem.moneyValue = CoinsSystem.moneyValue + CoinsSystem.moneyPlayerget;
-        CoinsSystem.moneyPlayerget = 0;
+        PlayerPrefs.SetInt("MoneyValue", CoinsSystem.moneyValue);
     }
 
     // Getter này trả về true nếu chẵn
     
-   IEnumerator Result()
+    IEnumerator Result()
    {
         //Gacha place
         GenerateData();
@@ -182,6 +185,7 @@ public class RandomDice : MonoBehaviour
     }
     public IEnumerator TimeCountDown()
     {
+
         inCountDown = true;
         //Time count downs
         countdownTime = 10f;

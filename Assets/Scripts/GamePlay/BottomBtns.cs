@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class BottomBtns : MonoBehaviour
 {
-    public GameObject wheelDaily;
+    public GameObject luckyWheel;
+    public GameObject dailyGift;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,12 +16,20 @@ public class BottomBtns : MonoBehaviour
     {
         
     }
-    public void wheel()
+    public void Wheel()
     {
-        wheelDaily.SetActive(true);
+        luckyWheel.SetActive(true);
     }
-    public void exitWheel()
+    public void ExitWheel()
     {
-        wheelDaily.SetActive(false);
+        luckyWheel.SetActive(false);
+    }
+    public void DailyGift()
+    {
+        dailyGift.SetActive(true);
+    }
+    public void ExitDailyGift()
+    {
+        dailyGift.SetActive(false);
     }
 }
