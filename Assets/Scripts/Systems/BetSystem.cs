@@ -22,6 +22,9 @@ public class BetSystem : MonoBehaviour
     public Sprite[] clonecoinSprite;
     public int coinSpriteID;
 
+    //Condiction
+    public bool isBet;
+
     //Bets value
     public static int chanbetValue;
     public static int lebetValue;
@@ -29,6 +32,7 @@ public class BetSystem : MonoBehaviour
     public static int redWhiteValue;
     public static int allWhiteValue;
     public static int allRedValue;
+    public static int playerBet;
 
     public static int allBetMoney;
     public static int btnid;
@@ -46,9 +50,10 @@ public class BetSystem : MonoBehaviour
     }
     void Start()
     {
+        isBet = false;
         coins = FindObjectsOfType<CoinsSystem>();
     }
-    
+
     void CreateObject()
     {
         GameObject newcoin = ObjectPooling.instance.GetPooledObject();
@@ -62,9 +67,16 @@ public class BetSystem : MonoBehaviour
         }
         newcoin.GetComponent<BetCoin>().enabled = true;
         listCoin.Add(newcoin);
+
+        if(CoinsSystem.moneyValue <= 0)
+        {
+            CoinsSystem.moneyValue = 3000;
+            moneyDisplay.text = " $ " + CoinsSystem.moneyValue;
+        }
     }
     public void Bet(int id)
     {   
+       
         //Get value from Bet buttons
         foreach(CoinsSystem c in coins)
         {
@@ -74,46 +86,47 @@ public class BetSystem : MonoBehaviour
                 moneyDisplay.text = " $ " + CoinsSystem.moneyValue;
                 if (id == 0)
                 {
-                    chanbetValue += CoinsSystem.betCoinsValue;
-                    chanBetDisplay.text = " $ " + chanbetValue;
-                    CreateObject();
+                    playerBet += CoinsSystem.betCoinsValue;
+                    isBet = true;
                     btnid = id;
+                    CreateObject();
+
                 }
                 if (id == 1)
                 {
-                    lebetValue += CoinsSystem.betCoinsValue;
-                    leBetDisplay.text = " $ " + lebetValue;
-                    CreateObject();
+                    playerBet += CoinsSystem.betCoinsValue;
+                    isBet = true;
                     btnid = id;
+                    CreateObject();
+
                 }
                 if (id == 2)
                 {
-                    whiteRedValue += CoinsSystem.betCoinsValue;
-                    whiteRedDisplay.text = " $ " + whiteRedValue;
-                    CreateObject();
-
+                    playerBet += CoinsSystem.betCoinsValue;
+                    isBet = true;
                     btnid = id;
+                    CreateObject();
                 }
                 if (id == 3)
                 {
-                    redWhiteValue += CoinsSystem.betCoinsValue;
-                    redWhiteDisplay.text = " $ " + redWhiteValue;
-                    CreateObject() ;
+                    playerBet += CoinsSystem.betCoinsValue;
+                    isBet = true;
                     btnid = id;
-                }
-                if(id == 4)
-                {
-                    allWhiteValue += CoinsSystem.betCoinsValue;
-                    allWhiteDisplay.text = " $ " + allWhiteValue;
                     CreateObject();
+                }
+                if (id == 4)
+                {
+                    playerBet += CoinsSystem.betCoinsValue;
+                    isBet = true;
                     btnid = id;
+                    CreateObject();
                 }
                 if (id == 5)
                 {
-                    allRedValue += CoinsSystem.betCoinsValue;
-                    allRedDisplay.text = " $ " + allRedValue;
-                    CreateObject();
+                    playerBet += CoinsSystem.betCoinsValue;
+                    isBet = true;
                     btnid = id;
+                    CreateObject();
                 }
             }
         }

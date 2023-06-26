@@ -8,6 +8,7 @@ TagManager:
   - Host
   - Time
   - Chip10
+  - Bot
   layers:
   - Default
   - TransparentFX

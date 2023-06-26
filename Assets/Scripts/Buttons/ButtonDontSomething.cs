@@ -16,6 +16,7 @@ public class ButtonDontSomething : MonoBehaviour
     IEnumerator Peset()
     {
         yield return new WaitForSeconds(3f);
+        
         isLose = false;
         this.enabled = false;
     }

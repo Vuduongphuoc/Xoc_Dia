@@ -12,26 +12,40 @@ public class RandomDice : MonoBehaviour
     [SerializeField] private Sprite[] spr;
 
     //Odd and Even buttons value
+    [Header("Odd & Even")]
     public List<GameObject> oddButtons;
     public List<GameObject> evenButtons;
 
     //MoneyDisplay on bet buttons
+    [Header("Money")]
     public BetSystem betsystem;
     public Text moneyDisplay;
+    public Text moneyPlayerget;
+
+    //Bot
+    //public Text[] moneyBotGet;
+    //public GameObject[] money_Bot_Get_Display;
 
     public GameObject dishcover;
+    public GameObject host;
 
     //CountDown and disable buttons
+    [Header("CountDown")]
     float countdownTime;
+    public GameObject startBetting;
+    public GameObject endBetting;
     public GameObject countdownDisplay;
+    public GameObject moneyPlayerGet;
     public GameObject[] btnDisable;
 
     public static RandomDice Instance;
     public bool inCountDown;
+    public bool inBetting;
 
 
-    
     //Shake the hecking dish
+
+    [Header("Dish")]
     private float duration;
     private float strength;
     private int vibrato;
@@ -142,9 +156,13 @@ public class RandomDice : MonoBehaviour
     void CountMoney()
     {
         betsystem.ResetResult();
-        CoinsSystem.moneyPlayerget = CoinsSystem.oddMoney + CoinsSystem.evenMoney;
-        CoinsSystem.moneyValue = CoinsSystem.moneyValue + CoinsSystem.moneyPlayerget;
-        PlayerPrefs.SetInt("MoneyValue", CoinsSystem.moneyValue);
+        if (betsystem.isBet)
+        {
+            CoinsSystem.moneyPlayerget = CoinsSystem.oddMoney + CoinsSystem.evenMoney;
+            CoinsSystem.moneyValue = CoinsSystem.moneyValue + CoinsSystem.moneyPlayerget;
+            PlayerPrefs.SetInt("money", CoinsSystem.moneyValue);
+        }
+       
     }
 
     // Getter này trả về true nếu chẵn
@@ -161,22 +179,32 @@ public class RandomDice : MonoBehaviour
         Odd();
         Debug.Log("Số dice có màu trắng là : " + data.Count(x => x == 0));
         Debug.Log("Số dice có màu đỏ là : " + data.Count(x => x == 1));
-
+        
+        //count money player get and show it on player balance
         CountMoney();
         yield return new WaitForSeconds(0.2f);
-        //
+        moneyPlayerGet.SetActive(true);
+        moneyPlayerget.text = " +" + CoinsSystem.moneyPlayerget;
 
+        //This is money bot get after result
+        //for (int i = 0 ; i < money_Bot_Get_Display.Length && i < moneyBotGet.Length; i++)
+        //{
 
-        //count money player get and show it on player balance
-        yield return new WaitForSeconds(0.9f);
+        //    money_Bot_Get_Display[i].SetActive(true);
+        //    moneyBotGet[i].text = " + " + BotWork.instance.money_after_result;
+
+        yield return new WaitForSeconds(1.3f);
+
+        //    money_Bot_Get_Display[i].SetActive(false);
+        //    BotWork.instance.botMoney.text = " $ " + BotWork.instance.money;
+        //}
+
+        moneyPlayerGet.SetActive(false);
         moneyDisplay.text = " $ " + CoinsSystem.moneyValue;
+        //Ready for new round
         dishcover.GetComponent<Animator>().Play("DishCoverClose");
         inCountDown = false;
-        
-        yield return new WaitForSeconds(6f);
-        //Active buttons after result
-
-
+        yield return new WaitForSeconds(5f);
         for (int i = 0; i < btnDisable.Length; i++)
         {
             btnDisable[i].GetComponent<Button>().enabled = true;
@@ -185,9 +213,19 @@ public class RandomDice : MonoBehaviour
     }
     public IEnumerator TimeCountDown()
     {
+        //Start betting state
+        startBetting.SetActive(true);
+        host.SetActive(false);
+        dish.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        startBetting.SetActive(false);
+        host.SetActive(true);
+        dish.SetActive(true);
 
-        inCountDown = true;
+
         //Time count downs
+        inBetting = true;
+        inCountDown = true;
         countdownTime = 10f;
         countdownDisplay.SetActive(true);
         while (countdownTime >= 0)
@@ -196,20 +234,25 @@ public class RandomDice : MonoBehaviour
             yield return new WaitForSeconds(1f);
             countdownTime--;
         }
+        inBetting = false;
+        endBetting.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
         dish.transform.DOShakePosition(duration, strength, vibrato, randoms);
 
-        countdownDisplay.SetActive(false);
-        
-        yield return new WaitForSeconds(0.5f);
-
-        //Disable buttons before result
-
-        for(int i = 0; i < btnDisable.Length; i++)
+        //End betting state
+        for (int i = 0; i < btnDisable.Length; i++)
         {
             btnDisable[i].GetComponent<Button>().enabled = false;
         }
-        //
-        yield return new WaitForSeconds(0.7f);
+        countdownDisplay.SetActive(false);;
+        host.SetActive(false);
+
+        yield return new WaitForSeconds(1.5f);
+        endBetting.SetActive(false);
+        host.SetActive(true);
+
+
+        //Disable buttons before result
         StartCoroutine(Result());
     }
     

@@ -18,6 +18,7 @@ public class PauseMenuScript : MonoBehaviour
         DestroyObjects();
         overLay.SetActive(false);
         CoinsSystem.Instance.menuMoneyDisplay.text = " $ " + CoinsSystem.moneyValue;
+        PlayerPrefs.SetInt("money", CoinsSystem.moneyValue);
         menuScene.SetActive(true);
         gamePlayUI.SetActive(false);
         gamePlay.SetActive(false);  

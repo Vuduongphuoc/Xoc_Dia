@@ -20,21 +20,21 @@ public class CoinsSystem : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        Instance = this;
-        moneyValue = PlayerPrefs.GetInt("MoneyValue");
+        if(Instance == null)
+        {
+            Instance = this;
+        }
     }
     void Start()
     {
-        menuMoneyDisplay.text = " $ " + moneyValue;
-        moneyDisplay.text = " $ " + moneyValue;
-        
-
+        moneyValue = PlayerPrefs.GetInt("money");
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        moneyDisplay.text = " $ " + moneyValue;
+        menuMoneyDisplay.text = " $ " + moneyValue;
     }
     public void ChoseCoinsValue(int id)
     {
@@ -43,7 +43,6 @@ public class CoinsSystem : MonoBehaviour
 
         if (id == 0)
         {
-            
             betCoinsValue = 10;
             coinsId = id;
             BetSystem.Instance.coinSpriteID = id;

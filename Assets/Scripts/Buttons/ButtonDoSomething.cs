@@ -6,9 +6,9 @@ using UnityEngine;
 public class ButtonDoSomething : MonoBehaviour
 {
     public GameObject glowbutton;
-    public bool isWin;
+    public  bool isWin;
     // Start is called before the first frame update
-  
+
     void OnEnable()
     {
         glowbutton.SetActive(true);

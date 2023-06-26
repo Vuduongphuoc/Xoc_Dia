@@ -67,11 +67,9 @@ public class DailyReward : MonoBehaviour
         Day_6 = PlayerPrefs.GetInt("Day_6");
         Day_7 = PlayerPrefs.GetInt("Day_7");
         lastDate = PlayerPrefs.GetInt("LastDate");
-        CoinsSystem.moneyValue = PlayerPrefs.GetInt("MoneyValue");
+        CoinsSystem.moneyValue = PlayerPrefs.GetInt("money");
         Reward();
-
-        money.menuMoneyDisplay.text = " $ " + CoinsSystem.moneyValue;
-        money.moneyDisplay.text = " $ " + CoinsSystem.moneyValue;
+        
         if (lastDate != System.DateTime.Now.Day)
         {
             
@@ -155,7 +153,6 @@ public class DailyReward : MonoBehaviour
             active_2.SetActive(false);
             claimed_2.SetActive(true);
             notification.SetActive(false);
-            
         }
 
         //Day 3
@@ -272,8 +269,8 @@ public class DailyReward : MonoBehaviour
     public void GetReward_1()
     {
         CoinsSystem.moneyValue = CoinsSystem.moneyValue + 500;
+        Present.instance.reward = 500;
         updateMoneyAfterDaily();
-
         count = 1;
         PlayerPrefs.SetInt("count", count);
 
@@ -282,13 +279,15 @@ public class DailyReward : MonoBehaviour
 
         Day_1 = 2;
         PlayerPrefs.SetInt("Day_1", 2);
-
+        StartCoroutine(Present.instance.GiftGet());
         Reward();
+
     }
 
     public void GetReward_2()
     {
         CoinsSystem.moneyValue = CoinsSystem.moneyValue + 1000;
+        Present.instance.reward = 1000;
         updateMoneyAfterDaily();
 
         count = 2;
@@ -298,14 +297,15 @@ public class DailyReward : MonoBehaviour
 
         Day_2 = 2;
         PlayerPrefs.SetInt("Day_2", 2);
-
+        StartCoroutine(Present.instance.GiftGet());
         Reward();
     }
 
     public void GetReward_3()
     {
         CoinsSystem.moneyValue = CoinsSystem.moneyValue + 2000;
-        updateMoneyAfterDaily();
+        Present.instance.reward = 2000;
+        updateMoneyAfterDaily() ;
 
         count = 3;
         PlayerPrefs.SetInt("count", count);
@@ -315,13 +315,14 @@ public class DailyReward : MonoBehaviour
 
         Day_3 = 2;
         PlayerPrefs.SetInt("Day_3", 2);
-
+        StartCoroutine(Present.instance.GiftGet());
         Reward();
     }
 
     public void GetReward_4()
     {
         CoinsSystem.moneyValue = CoinsSystem.moneyValue + 2500;
+        Present.instance.reward = 2500;
         updateMoneyAfterDaily();
 
         count = 4;
@@ -331,13 +332,14 @@ public class DailyReward : MonoBehaviour
 
         Day_4 = 2;
         PlayerPrefs.SetInt("Day_4", 2);
-
+        StartCoroutine(Present.instance.GiftGet());
         Reward();
     }
 
     public void GetReward_5()
     {
         CoinsSystem.moneyValue = CoinsSystem.moneyValue + 5000;
+        Present.instance.reward = 5000;
         updateMoneyAfterDaily();
 
         count = 5;
@@ -347,13 +349,14 @@ public class DailyReward : MonoBehaviour
 
         Day_5 = 2;
         PlayerPrefs.SetInt("Day_5", 2);
-
+        StartCoroutine(Present.instance.GiftGet());
         Reward();
     }
 
     public void GetReward_6()
     {
         CoinsSystem.moneyValue = CoinsSystem.moneyValue + 8000;
+        Present.instance.reward = 8000;
         updateMoneyAfterDaily();
 
         count = 6;
@@ -363,13 +366,14 @@ public class DailyReward : MonoBehaviour
 
         Day_6 = 2;
         PlayerPrefs.SetInt("Day_6", 2);
-
+        StartCoroutine(Present.instance.GiftGet());
         Reward();
     }
 
     public void GetReward_7()
     {
         CoinsSystem.moneyValue = CoinsSystem.moneyValue + 10000;
+        Present.instance.reward = 10000;
         updateMoneyAfterDaily();
         
         count = 7;
@@ -380,14 +384,13 @@ public class DailyReward : MonoBehaviour
 
         Day_7 = 2;
         PlayerPrefs.SetInt("Day_7", 2);
-
+        StartCoroutine(Present.instance.GiftGet());
         Reward();
     }
 
     public void updateMoneyAfterDaily()
     {
-        PlayerPrefs.SetInt("MoneyValue", CoinsSystem.moneyValue);
-        CoinsSystem.moneyValue = PlayerPrefs.GetInt("MoneyValue");
+        PlayerPrefs.SetInt("money", CoinsSystem.moneyValue);
         money.menuMoneyDisplay.text = " $ " + CoinsSystem.moneyValue;
     }
 
